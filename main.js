@@ -85,6 +85,7 @@ class Tree {
     this.root = this.deleteNode(this.root, value);
   }
 
+  
   deleteNode(current, value) {
     if (current === null) {
       return current;
