@@ -36,16 +36,18 @@ class Tree {
     return arrayNoDuplicates;
   }
 
-  // Utility search function
-  find(root, key) {
-    if (root === null || root.data === key) {
-      return root;
+  // Search tree for value and return if found
+  find(value) {
+    let current = this.root;
+    while (current !== null) {
+      if (current.data === value) {
+        return current;
+      } else if (value < current.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
     }
-
-    if (root.data < key) {
-      return this.find(root.right, key);
-    } 
-    return this.find(root.left, key);
   }
 
   // Inserts a new value into the BST
@@ -102,8 +104,8 @@ class Tree {
     if (root === null) {
       return 0;
     } else {
-      let left = height(root.left);
-      let right = heigth(root.right);
+      let left = height(this.root.left);
+      let right = heigth(this.root.right);
 
       if (left > right) {
         return (left + 1);
@@ -143,8 +145,8 @@ const bstSortDuplicates = new Tree([2,6,5,1,3,6,7,4,1]);
 // bst.prettyPrint(bst.root);
 // bstSort.prettyPrint(bstSort.root);
 bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
-console.log(bstSortDuplicates.find(bstSortDuplicates.root, 6));
-console.log(bstSortDuplicates.insert(bstSortDuplicates.root, 8));
-bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
-console.log(bstSortDuplicates.delete(bstSortDuplicates.root, 4));
-bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+console.log(bstSortDuplicates.find(6));
+// console.log(bstSortDuplicates.insert(bstSortDuplicates.root, 8));
+// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+// console.log(bstSortDuplicates.delete(bstSortDuplicates.root, 4));
+// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
