@@ -51,52 +51,73 @@ class Tree {
   }
 
   // Inserts a new value into the BST
-  insert(root, key) {
-    if (root === null) {
-      root = new Node(key);
-      return root;
+  insert(value) {
+    let newNode = new Node(value);
+    if (this.root === null) {
+      this.root = newNode;
+      return this.root;
     }
 
-    if (key < root.data) {
-      root.left = this.insert(root.left, key);
-    } else if (key > root.data) {
-      root.right = this.insert(root.right, key);
+    let current = this.root;
+    while (current) {
+      if(value === current.data) {
+        return undefined;
+      }
+      
+      if (value < current.value) {
+        if(current.left === null) {
+          current.left = newNode;
+          return current;
+        }
+        current = current.left;
+      } else {
+        if (current.right === null) {
+          current.right = newNode;
+          return current;
+        }
+        current = current.right;
+      }
     }
-    return root;
   }
 
-  // Deletes a value from the BST
-  delete(root, key) {
-    if (root === null) {
-      return root;
+  // Calls deleteNode function
+  delete(value) {
+    this.root = this.deleteNode(this.root, value);
+  }
+
+  deleteNode(current, value) {
+    if (current === null) {
+      return current;
     }
 
-    if (key < root.data) {
-      root.left = this.delete(root.left, key);
-    }
-
-    if (key > root.data) {
-      root.right = this.delete(root.right, key);
+    if (value === current.data) {
+      if (current.left === null && current.right === null) {
+        return null;
+      } else if (current.left === null) {
+        return current.right;
+      } else if (current.right === null) {
+        return current.left;
+      } else {
+        let temp = this.minValue(current.right);
+        current.data = temp.data;
+        current.right = this.deleteNode(current.right, temp.data);
+        return current;
+      }
+    } else if (value < current.data) {
+      current.left = this.deleteNode(current.left, value);
+      return current;
     } else {
-      if (root.left === null) {
-        return root.right;
-      } else if(root.right === null) {
-        return root.left;
-      }
-      root.data = this.minValue(root.right);
-      root.right = this.delete(root.right, root.data);
+      current.right = this.deleteNode(current.right, value);
+      return current;
     }
-    return root;
   }
 
-  // Utility function to find smallest value from inorder successort
+  // Utility function to find smallest value from inorder successor
   minValue(root) {
-    let min = root.data;
-      while(root.left !== null){
-        min = root.left.data;
-        root = root.left;
-      }
-      return min;
+    while (!root.left === null) {
+      root = root.left;
+      return root;
+    }
   }
 
   // Finds the height of the tree
@@ -145,8 +166,8 @@ const bstSortDuplicates = new Tree([2,6,5,1,3,6,7,4,1]);
 // bst.prettyPrint(bst.root);
 // bstSort.prettyPrint(bstSort.root);
 bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
-console.log(bstSortDuplicates.find(6));
-// console.log(bstSortDuplicates.insert(bstSortDuplicates.root, 8));
-// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
-// console.log(bstSortDuplicates.delete(bstSortDuplicates.root, 4));
-// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+// console.log(bstSortDuplicates.find(6));
+console.log(bstSortDuplicates.insert(8));
+bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+console.log(bstSortDuplicates.delete(7));
+bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
