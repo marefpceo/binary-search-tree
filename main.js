@@ -85,7 +85,7 @@ class Tree {
     this.root = this.deleteNode(this.root, value);
   }
 
-  
+
   deleteNode(current, value) {
     if (current === null) {
       return current;
@@ -137,13 +137,30 @@ class Tree {
     }
   }
 
-  levelOrder(root, level) {
+  levelOrder(root) {
     if (root === null) {
-      return;
+      return [];
     }
-    if (level === 1) {
-      return
+    let result = [];
+    let queue = [root];
+    while (queue.length !== 0) {
+      let subArr = [];
+
+      for (let i = 0; i < queue.length; i + 1) {
+        let node = queue.shift();
+
+        if (node.left ) {
+          queue.push(node.left);
+        }
+
+        if (node.right) {
+          queue.push(node.right);
+        }
+        result.push(subArr);
+      } 
     }
+    console.log(result);
+    return result;
   }
 
   // Prints BST in a readable format to the console
@@ -166,9 +183,10 @@ class Tree {
 const bstSortDuplicates = new Tree([2,6,5,1,3,6,7,4,1]);
 // bst.prettyPrint(bst.root);
 // bstSort.prettyPrint(bstSort.root);
-bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
 // console.log(bstSortDuplicates.find(6));
-console.log(bstSortDuplicates.insert(8));
+// console.log(bstSortDuplicates.insert(8));
+// bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+// console.log(bstSortDuplicates.delete(7));
 bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
-console.log(bstSortDuplicates.delete(7));
-bstSortDuplicates.prettyPrint(bstSortDuplicates.root);
+bstSortDuplicates.levelOrder(bstSortDuplicates.root);
